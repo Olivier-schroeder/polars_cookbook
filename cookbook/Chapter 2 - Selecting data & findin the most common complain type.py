@@ -26,21 +26,21 @@ complaints["Complaint Type"]
 
 # %%
 # TODO: rewrite the above using the polars library
-
+pl_complaints.select("Complaint Type")
 # %%
 # Get the first 5 rows of a dataframe
 complaints[:5]
 
 # %%
 # TODO: rewrite the above using the polars library
-
+pl_complaints.head(5)
 # %%
 # Combine these to get the first 5 rows of a column:
 complaints["Complaint Type"][:5]
 
 # %%
 # TODO: rewrite the above using the polars library
-
+pl_complaints.select("Complaint Type").head(5)
 
 # %%
 # Selecting multiple columns
@@ -48,7 +48,7 @@ complaints[["Complaint Type", "Borough"]]
 
 # %%
 # TODO: rewrite the above using the polars library
-
+pl_complaints.select(["Complaint Type", "Borough"])
 # %%
 # What's the most common complaint type?
 complaint_counts = complaints["Complaint Type"].value_counts()
