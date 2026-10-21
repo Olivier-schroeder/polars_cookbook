@@ -56,7 +56,17 @@ complaint_counts[:10]
 
 # %%
 # TODO: rewrite the above using the polars library
+pl_complaint_counts = (
+    pl_complaints
+    .select("Complaint Type")
+    .drop_nulls()
+    .group_by("Complaint Type")
+    .len()
+    .sort("len", descending=True)
+    .head(10)
+)
 
+pl_complaint_counts
 # %%
 # Plot the top 10 most common complaints
 complaint_counts[:10].plot(kind="bar")
