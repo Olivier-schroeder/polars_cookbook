@@ -79,3 +79,19 @@ plt.show()
 
 # %%
 # TODO: please do the same with Polars
+# Plot the top 10 complaint types using Polars data
+
+fig, ax = plt.subplots(figsize=(12, 6))
+
+ax.bar(
+    pl_complaint_counts["Complaint Type"].to_list(),
+    pl_complaint_counts["len"].to_list()
+)
+
+ax.set_title("Top 10 Complaint Types")
+ax.set_xlabel("Complaint Type")
+ax.set_ylabel("Count")
+
+plt.xticks(rotation=45, ha="right")
+plt.tight_layout()
+plt.show()
