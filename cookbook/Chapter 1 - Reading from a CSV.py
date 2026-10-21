@@ -2,6 +2,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# %%
+import polars as pl
+import polars.selectors as cs
+
 
 # %%
 # Reading data from a csv file
@@ -16,10 +20,16 @@ broken_df = pd.read_csv("../data/bikes.csv", encoding="ISO-8859-1")
 # TODO: please load the data with the Polars library (do not forget to import Polars at the top of the script) and call it pl_broken_df
 
 # %%
+pl_broken_df = pl.read_csv("../data/bikes.csv", encoding="ISO-8859-1")
+
+# %%
 # Look at the first 3 rows
 broken_df[:3]
 
 # TODO: do the same with your polars data frame, pl_broken_df
+
+#%%
+pl_broken_df.head(3)
 
 # %%
 # You'll notice that this is totally broken! `read_csv` has a bunch of options that will let us fix that, though. Here we'll
@@ -42,6 +52,15 @@ fixed_df[:3]
 
 # TODO: do the same (or similar) with polars
 
+#%%
+pl_fixed_df = pl.read_csv(
+    "../data/bikes.csv",
+    separator=";",
+    encoding="latin1",
+).with_columns(
+    pl.col("Date").str.to_date("%d/%m/%Y")
+)
+pl_fixed_df.head(3)
 
 # %%
 # Selecting a column
@@ -52,6 +71,9 @@ fixed_df["Berri 1"]
 
 # TODO: how would you do this with a Polars data frame?
 
+#%%
+pl_fixed_df["Berri 1"]           # returns a Series (one column)
+pl_fixed_df.select("Berri 1")    # returns a DataFrame with one column
 
 # %%
 # Plotting is quite easy in Pandas
@@ -59,6 +81,9 @@ fixed_df["Berri 1"].plot()
 
 # TODO: how would you do this with a Polars data frame?
 
+plt.figure()
+plt.plot(pl_fixed_df["Date"], pl_fixed_df["Berri 1"])
+plt.show()
 
 # %%
 # We can also plot all the columns just as easily. We'll make it a little bigger, too.
@@ -67,3 +92,11 @@ fixed_df["Berri 1"].plot()
 fixed_df.plot(figsize=(15, 10))
 
 # TODO: how would you do this with a Polars data frame? With Polars data frames you might have to use the Seaborn library and it mmight not work out of the box as with pandas.
+
+# %%
+fig, ax = plt.subplots(figsize=(15, 10))
+for col in pl_fixed_df.select(cs.numeric()).columns:
+    ax.plot(pl_fixed_df["Date"], pl_fixed_df[col], label=col)
+ax.legend()
+plt.show()
+
