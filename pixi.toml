@@ -1,0 +1,18 @@
+[workspace]
+authors = ["Olivier Schroeder <olivier.schroeder@web.de>"]
+channels = ["conda-forge"]
+name = "polars_cookbook"
+platforms = ["win-64", "osx-arm64", "osx-64", "linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.12.*"
+polars = ">=2.0.0,<3"
+pandas = ">=3.0.6,<4"
+numpy = ">=2.5.4,<3"
+matplotlib = ">=3.11.2,<4"
+seaborn = ">=0.13.2,<0.14"
+pyarrow = ">=25.0.0,<26"
+ipykernel = ">=7.4.0,<8"
